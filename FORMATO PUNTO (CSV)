@@ -1,4 +1,4 @@
-#################################################################################
+D###############################################################################
 #DESCARGA DE INFORMACION GRILLADA PISCO, EN UN FORMATO CSV (CONSIDERANDO COORDENADAS).
 
 #SE DIRECCIONA LA CARPETADE TRABAJO
@@ -7,15 +7,13 @@ setwd("A:/RODRIGOCHAVARRY/Estacionees")
 library(raster)
 library(sp)
 library(ncdf4)
-library(Rcpp)
-#IMPORTAR EL ARCHIVO CSV(DONDE SE ENCUENTRA LAS COORDENAS) 
  #DEBE TENER 3 COLUMNAS(NOMBRE ESTACION,XX,YY)
 long_lat <- read.csv("Coordenadas_de_estaciones.csv")
 #IMPORTAR EL ARCHIVO NETCDF(PISCO)
 raster_pp <- raster::brick("PISCOd_tmax.nc")
 #CORRELACIONAR LAS COORDENADAS LONG Y LATITUD CON "XX-YY")
 sp::coordinates(long_lat) <- ~XX+YY
-#PROYECTAMOS LA INFORMACION DE COORENADAS CON EL NETCDF
+#PROYECTAMOS LA INFORMACION DE COORDENASD CON EL NETCDF
 raster::projection(long_lat) <- raster::projection(raster_pp)
 #EXTRAEMOS LA INFORMACION QUE SE ENCUENTRA EN LAS COORDENADAS DEL CSV
 points_long_lat <- raster::extract(raster_pp[[1]], long_lat, cellnumbers = T)[,1]
